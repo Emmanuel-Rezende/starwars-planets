@@ -4,6 +4,7 @@ import TableContext from './TableContext';
 
 export default function TableProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [inputFilter, setInputFilter] = useState('');
 
   const chamaApi = async () => {
     const endpoint = 'https://swapi.dev/api/planets';
@@ -11,12 +12,19 @@ export default function TableProvider({ children }) {
     const json = await apiFetch.json();
     setPlanets(json.results);
   };
+
   useEffect(() => {
     chamaApi();
   }, []);
-  const planetas = useMemo(() => ({ planets }), [planets]); // retorna um valor memorizado
+
+  const filtrar = ({ target }) => setInputFilter(target.value);
+
+  const value = useMemo(
+    () => ({ planets, inputFilter, filtrar }),
+    [planets, inputFilter],
+  );
   return (
-    <TableContext.Provider value={ planetas }>
+    <TableContext.Provider value={ value }>
       { children }
     </TableContext.Provider>
   );
