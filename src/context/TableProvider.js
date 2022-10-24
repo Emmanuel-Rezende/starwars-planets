@@ -6,9 +6,17 @@ export default function TableProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [inputFilter, setInputFilter] = useState('');
   const [column, setColumn] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
+  const [comparisonT, setComparison] = useState('maior que');
   const [valueFilter, setValueFilter] = useState(0);
   const [todosFiltros, setTodosFiltros] = useState([]);
+  const [filterAtt, setFilterAtt] = useState([]);
+  const [initialFilter, setInitialFilter] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   const chamaApi = async () => {
     const endpoint = 'https://swapi.dev/api/planets';
@@ -31,9 +39,14 @@ export default function TableProvider({ children }) {
       planets,
       inputFilter,
       column,
-      comparison,
+      comparisonT,
       valueFilter,
       todosFiltros,
+      filterAtt,
+      initialFilter,
+      setColumn,
+      setFilterAtt,
+      setInitialFilter,
       setPlanets,
       setTodosFiltros,
       filtrar,
@@ -41,7 +54,14 @@ export default function TableProvider({ children }) {
       selectComparison,
       inputValueFilter,
     }),
-    [planets, inputFilter, column, comparison, valueFilter, todosFiltros],
+    [planets,
+      inputFilter,
+      column,
+      comparisonT,
+      valueFilter,
+      todosFiltros,
+      filterAtt,
+      initialFilter],
   );
 
   return (

@@ -5,31 +5,41 @@ export default function Filter() {
   const {
     planets,
     column,
-    comparison,
+    comparisonT,
     valueFilter,
     selectColumn,
     selectComparison,
     inputValueFilter,
     setPlanets,
     setTodosFiltros,
-    /* todosFiltros, */
+    todosFiltros,
+    setColumn,
+    filterAtt,
+    initialFilter,
+    setFilterAtt,
+    setInitialFilter,
   } = useContext(TableContext);
 
   const botaoFiltrar = () => {
-    if (comparison === 'maior que') {
+    if (comparisonT === 'maior que') {
       const filtro = planets.filter((elemento) => +elemento[column] > +valueFilter);
       setPlanets(filtro);
     }
-    if (comparison === 'menor que') {
+    if (comparisonT === 'menor que') {
       const filtro = planets.filter((elemento) => +elemento[column] < +valueFilter);
       setPlanets(filtro);
     }
-    if (comparison === 'igual a') {
+    if (comparisonT === 'igual a') {
       const filtro = planets.filter((elemento) => +elemento[column] === +valueFilter);
       setPlanets(filtro);
     }
-    const filtragens = `${column} ${comparison} ${valueFilter}`;
+    const filtragens = [...todosFiltros, `${column} ${comparisonT} ${valueFilter}`];
     setTodosFiltros(filtragens);
+    setFilterAtt([...filterAtt,
+      { column, comparison: comparisonT, value: valueFilter }]);
+    const teste = initialFilter.filter((elemento) => elemento !== column);
+    setColumn(teste[0]);
+    setInitialFilter(teste);
   };
   return (
     <section>
@@ -39,15 +49,15 @@ export default function Filter() {
           value={ column }
           onChange={ selectColumn }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {initialFilter.map((elemento) => (
+            <option key={ elemento } value={ elemento }>
+              {elemento}
+            </option>
+          ))}
         </select>
         <select
           data-testid="comparison-filter"
-          value={ comparison }
+          value={ comparisonT }
           onChange={ selectComparison }
         >
           <option value="maior que">maior que</option>
@@ -69,9 +79,9 @@ export default function Filter() {
         </button>
 
       </div>
-      {/* {todosFiltros && (
+      {todosFiltros && (
         todosFiltros.map((elemento) => <h1 key={ elemento }>{ elemento }</h1>)
-      )} */}
+      )}
     </section>
   );
 }
