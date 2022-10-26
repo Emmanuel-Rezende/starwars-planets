@@ -80,7 +80,8 @@ export default function Filter() {
 
       </div>
       {todosFiltros && (
-        todosFiltros.map((elemento) => <h1 key={ elemento }>{ elemento }</h1>)
+        todosFiltros.map((elemento) => (
+          <h1 key={ elemento } data-testid="filtro">{ elemento }</h1>))
       )}
     </section>
   );

@@ -72,5 +72,5 @@ export default function TableProvider({ children }) {
 }
 
 TableProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
